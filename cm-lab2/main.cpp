@@ -29,6 +29,9 @@ int main() {
 
 	PowerIteration(A, ROWS, COLUMNS, eigenvalue1, eigenvalue2, eigenvector1, eigenvector2);
 
+	cout << endl << endl;
+	cout << eigenvalue1;
+
 	delete[] eigenvector2;
 	delete[] eigenvector1;
 
