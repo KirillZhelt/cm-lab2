@@ -1,5 +1,7 @@
 #pragma once
 
+double CheckEigenvalue(double** A, int rows, int columns, double eigenvalue, double* eigenvector);
+
 double MaxNorm(double* v, int length);
 
 double EuclideanNorm(double* v, int length);

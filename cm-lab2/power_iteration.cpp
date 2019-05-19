@@ -7,8 +7,7 @@
 
 using namespace std;
 
-void PowerIteration(double** A, int rows, int columns, double& eigenvalue1, double& eigenvalue2,
-	double* eigenvector1, double* eigenvector2) {
+void PowerIterationBase(double** A, int rows, int columns, double& eigenvalue, double* eigenvector) {
 	double* y = new double[columns] {};
 	y[0] = 1;
 
@@ -16,18 +15,18 @@ void PowerIteration(double** A, int rows, int columns, double& eigenvalue1, doub
 
 	double* Au = new double[columns];
 
-	eigenvalue1 = 0;
+	eigenvalue = 0;
 
-	CopyVector(y, eigenvector1, columns);
+	CopyVector(y, eigenvector, columns);
 
 	int k = 0;
-	
-	Multiply(A, rows, columns, eigenvector1, columns, Au);
+
+	Multiply(A, rows, columns, eigenvector, columns, Au);
 
 	while (k < MAX_ITERATION_NUMBER) {
 
 		for (int i = 0; i < columns; i++)
-			difference[i] = Au[i] - eigenvalue1 * eigenvector1[i];
+			difference[i] = Au[i] - eigenvalue * eigenvector[i];
 
 		if (EuclideanNorm(difference, columns) < POWER_ITERATION_EPS)
 			break;
@@ -37,11 +36,11 @@ void PowerIteration(double** A, int rows, int columns, double& eigenvalue1, doub
 		double y_norm = EuclideanNorm(y, columns);
 
 		for (int i = 0; i < columns; i++)
-			eigenvector1[i] = y[i] / y_norm;
+			eigenvector[i] = y[i] / y_norm;
 
-		Multiply(A, rows, columns, eigenvector1, columns, Au);
+		Multiply(A, rows, columns, eigenvector, columns, Au);
 
-		eigenvalue1 = ScalarMultiply(eigenvector1, Au, columns);
+		eigenvalue = ScalarMultiply(eigenvector, Au, columns);
 
 		k++;
 	}
@@ -53,4 +52,27 @@ void PowerIteration(double** A, int rows, int columns, double& eigenvalue1, doub
 	delete[] difference;
 
 	delete[] y;
+}
+
+void PowerIteration(double** A, int rows, int columns, double& eigenvalue1, double& eigenvalue2,
+	double* eigenvector1, double* eigenvector2) {
+	PowerIterationBase(A, rows, columns, eigenvalue1, eigenvector1);
+
+	double** B = new double*[rows];
+	for (int i = 0; i < rows; i++)
+		B[i] = new double[columns];
+
+	CopyMatrix(A, B, rows, columns);
+
+	for (int i = 0; i < rows; i++)
+		B[i][i] -= eigenvalue1;
+
+	PowerIterationBase(B, rows, columns, eigenvalue2, eigenvector2);
+
+	eigenvalue2 += eigenvalue1;
+
+	for (int i = 0; i < rows; i++)
+		delete[] B[i];
+
+	delete[] B;
 }

@@ -4,6 +4,23 @@
 
 using namespace std;
 
+double CheckEigenvalue(double** A, int rows, int columns, double eigenvalue, double* eigenvector) {
+	double* difference = new double[columns];
+	double* Au = new double[columns];
+
+	Multiply(A, rows, columns, eigenvector, columns, Au);
+
+	for (int i = 0; i < columns; i++)
+		difference[i] = Au[i] - eigenvalue * eigenvector[i];
+
+	double euclidean_norm = EuclideanNorm(difference, columns);
+
+	delete[] Au;
+	delete[] difference;
+	
+	return euclidean_norm;
+}
+
 double MaxNorm(double* v, int length) {
 	double max = v[0];
 
