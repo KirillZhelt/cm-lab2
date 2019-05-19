@@ -13,5 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\fill-task1">
+      <UniqueIdentifier>{28ef929c-6816-4a1d-8e0f-487d13e68d91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities">
+      <UniqueIdentifier>{133443ab-870f-4b53-b12e-d1479243512c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fill.cpp">
+      <Filter>Source Files\fill-task1</Filter>
+    </ClCompile>
+    <ClCompile Include="utilities.cpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="fill.h">
+      <Filter>Source Files\fill-task1</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities.h">
+      <Filter>Source Files\utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
