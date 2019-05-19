@@ -63,3 +63,8 @@ void Multiply(double** m, int rows, int columns,
 			b[i] += m[i][j] * v[j];
 	}
 }
+
+void Subtract(double* v1, double* v2, int length, double* result) {
+	for (int i = 0; i < length; i++)
+		result[i] = v1[i] - v2[i];
+}

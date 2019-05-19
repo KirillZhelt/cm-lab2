@@ -22,6 +22,16 @@ int main() {
 	Fill(A, ROWS, COLUMNS, N);
 	PrintMatrix(A, ROWS, COLUMNS);
 
+	double eigenvalue1, eigenvalue2;
+
+	double* eigenvector1 = new double[COLUMNS];
+	double* eigenvector2 = new double[COLUMNS];
+
+	PowerIteration(A, ROWS, COLUMNS, eigenvalue1, eigenvalue2, eigenvector1, eigenvector2);
+
+	delete[] eigenvector2;
+	delete[] eigenvector1;
+
 	for (int i = 0; i < ROWS; i++)
 		delete[] A[i];
 
