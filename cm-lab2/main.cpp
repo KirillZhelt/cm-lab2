@@ -4,6 +4,7 @@
 #include "utilities.h"
 
 #include "fill.h" // TASK1
+#include "power_iteration.h" // TASK2
 
 using namespace std;
 
