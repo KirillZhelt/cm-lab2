@@ -16,14 +16,7 @@ void Fill(double** m, int rows, int columns, int N) {
 		m[i][i] = 0;
 
 	for (int i = 0; i < rows; i++) {
-		for (int j = i + 1; j < columns; j++) {
-			m[i][j] = m[j][i] = dis(gen);
-
-			m[i][i] += fabs(m[i][j]);
-			m[j][j] += fabs(m[i][j]);
-		}
-
-		if (m[i][i] < 0)
-			cout << m[i][i] << endl;
+		for (int j = 0; j < columns; j++)
+			m[i][j] = dis(gen);
 	}
 }
