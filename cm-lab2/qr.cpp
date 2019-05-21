@@ -42,6 +42,69 @@ void BuildQR(double** m, int rows, int columns, double** qr, double* diag_r) {
 	}
 }
 
-void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues) {
+void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues, int number_of_iterations) {
+	// Ak = QkRk
+	// Ak+1 = Rk*Qk
+	// —читаю собственные значени€ из Ak
 
+	double** qr = new double*[rows];
+	for (int i = 0; i < rows; i++)
+		qr[i] = new double[columns];
+
+	double* diag_r = new double[rows];
+
+	double** r = new double*[rows];
+	for (int i = 0; i < rows; i++)
+		r[i] = new double[columns] {};
+
+	double** q = new double*[rows];
+	for (int i = 0; i < rows; i++)
+		q[i] = new double[columns] {};
+
+	for (int i = 0; i < rows; i++)
+		q[i][i] = 1;
+
+	for (int i = 0; i < number_of_iterations; i++) {
+		BuildQR(A, rows, columns, qr, diag_r);
+
+		for (int i = 0; i < rows; i++)
+			r[i][i] = diag_r[i];
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = i + 1; j < columns; j++)
+				r[i][j] = qr[j][i];
+		}
+
+		for (int i = 0; i < rows; i++) {
+			// every row go through w1 ... wn
+
+			for (int j = 0; j < columns - 1; j++) {
+				double scalar_multiply_result = ScalarMultiply(&qr[j][j], &q[i][j], rows - j);
+				
+				for (int k = j; k < columns; k++)
+					q[i][k] -= 2 * scalar_multiply_result * qr[j][k];
+			}
+		}
+	}
+
+	/*
+		https://www.programiz.com/cpp-programming/examples/quadratic-roots
+
+		for finding roots 
+	*/
+
+	for (int i = 0; i < rows; i++)
+		delete[] q[i];
+
+	delete[] q;
+
+	for (int i = 0; i < rows; i++)
+		delete[] r[i];
+
+	delete[] r;
+
+	for (int i = 0; i < rows; i++)
+		delete[] qr[i];
+
+	delete[] qr;
 }
