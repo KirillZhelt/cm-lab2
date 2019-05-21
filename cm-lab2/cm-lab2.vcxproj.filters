@@ -22,6 +22,9 @@
     <Filter Include="Source Files\power-iteration-task2">
       <UniqueIdentifier>{3f380671-28e3-42a0-87b5-d3dc218d5c78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\qr-task3">
+      <UniqueIdentifier>{1c782c08-07bd-422d-bb1b-e461bbf89904}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,6 +39,9 @@
     <ClCompile Include="power_iteration.cpp">
       <Filter>Source Files\power-iteration-task2</Filter>
     </ClCompile>
+    <ClCompile Include="qr.cpp">
+      <Filter>Source Files\qr-task3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fill.h">
@@ -46,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="power_iteration.h">
       <Filter>Source Files\power-iteration-task2</Filter>
+    </ClInclude>
+    <ClInclude Include="qr.h">
+      <Filter>Source Files\qr-task3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

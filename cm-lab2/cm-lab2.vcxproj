@@ -118,11 +118,13 @@
     <ClCompile Include="fill.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="power_iteration.cpp" />
+    <ClCompile Include="qr.cpp" />
     <ClCompile Include="utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fill.h" />
     <ClInclude Include="power_iteration.h" />
+    <ClInclude Include="qr.h" />
     <ClInclude Include="utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
