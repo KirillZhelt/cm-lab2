@@ -40,7 +40,8 @@ int main() {
 	Complex* eigenvalues = new Complex[ROWS];
 
 	FindEigenvaluesQR(A, ROWS, COLUMNS, eigenvalues);
-	
+	PrintVector(eigenvalues, ROWS);
+
 	delete[] eigenvalues;
 
 	delete[] eigenvector2;

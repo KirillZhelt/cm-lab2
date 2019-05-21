@@ -1,8 +1,15 @@
 #include <iostream>
 
 #include "utilities.h"
+#include "qr.h"
 
 using namespace std;
+
+ostream& operator<<(ostream& out, Complex complex_number) {
+	out << complex_number.real << " + " << complex_number.imaginary << "i";
+
+	return out;
+}
 
 double CheckEigenvalue(double** A, int rows, int columns, double eigenvalue, double* eigenvector) {
 	double* difference = new double[columns];
@@ -52,13 +59,6 @@ void PrintMatrix(double** m, int rows, int columns) {
 
 		cout << '\n';
 	}
-}
-
-void PrintVector(double* v, int length) {
-	for (int i = 0; i < length; i++)
-		cout << v[i] << ' ';
-
-	cout << "\n";
 }
 
 void CopyMatrix(double** src, double** dst, int rows, int columns) {
