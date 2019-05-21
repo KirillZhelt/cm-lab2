@@ -20,18 +20,21 @@ int main() {
 		A[i] = new double[COLUMNS];
 
 	Fill(A, ROWS, COLUMNS, N);
-	PrintMatrix(A, ROWS, COLUMNS);
 
 	double eigenvalue1, eigenvalue2;
 
 	double* eigenvector1 = new double[COLUMNS];
 	double* eigenvector2 = new double[COLUMNS];
 
-	PowerIteration(A, ROWS, COLUMNS, eigenvalue1, eigenvalue2, eigenvector1, eigenvector2);
+	int k1, k2;
+
+	PowerIteration(A, ROWS, COLUMNS, eigenvalue1, eigenvalue2, eigenvector1, eigenvector2, k1, k2);
+
+	cout << k1 << " " << k2;
 
 	cout << endl << endl;
 	cout << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
-	cout << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2);
+	cout << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
 
 	delete[] eigenvector2;
 	delete[] eigenvector1;

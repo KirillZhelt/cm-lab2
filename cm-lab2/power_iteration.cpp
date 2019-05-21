@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void PowerIterationBase(double** A, int rows, int columns, double& eigenvalue, double* eigenvector) {
+void PowerIterationBase(double** A, int rows, int columns, double& eigenvalue, double* eigenvector, int& k) {
 	double* y = new double[columns] {};
 	y[0] = 1;
 
@@ -19,7 +19,7 @@ void PowerIterationBase(double** A, int rows, int columns, double& eigenvalue, d
 
 	CopyVector(y, eigenvector, columns);
 
-	int k = 0;
+	k = 0;
 
 	Multiply(A, rows, columns, eigenvector, columns, Au);
 
@@ -45,8 +45,6 @@ void PowerIterationBase(double** A, int rows, int columns, double& eigenvalue, d
 		k++;
 	}
 
-	cout << endl << k << endl;
-
 	delete[] Au;
 
 	delete[] difference;
@@ -55,8 +53,8 @@ void PowerIterationBase(double** A, int rows, int columns, double& eigenvalue, d
 }
 
 void PowerIteration(double** A, int rows, int columns, double& eigenvalue1, double& eigenvalue2,
-	double* eigenvector1, double* eigenvector2) {
-	PowerIterationBase(A, rows, columns, eigenvalue1, eigenvector1);
+	double* eigenvector1, double* eigenvector2, int& k1, int& k2) {
+	PowerIterationBase(A, rows, columns, eigenvalue1, eigenvector1, k1);
 
 	double** B = new double*[rows];
 	for (int i = 0; i < rows; i++)
@@ -67,7 +65,7 @@ void PowerIteration(double** A, int rows, int columns, double& eigenvalue1, doub
 	for (int i = 0; i < rows; i++)
 		B[i][i] -= eigenvalue1;
 
-	PowerIterationBase(B, rows, columns, eigenvalue2, eigenvector2);
+	PowerIterationBase(B, rows, columns, eigenvalue2, eigenvector2, k2);
 
 	eigenvalue2 += eigenvalue1;
 
