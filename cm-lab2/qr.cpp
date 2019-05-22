@@ -126,10 +126,17 @@ void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues, 
 
 	for (int i = 0; i < rows; ) {
 		if (i + 1 < rows) {
+			if (ak[i + 1][i] != 0) {
 
+			}
+			else {
+				eigenvalues[i] = { ak[i][i], 0 };
+				i++;
+			}
 		} 
 		else {
 			eigenvalues[i] = { ak[i][i], 0 };
+			i++;
 		}
 	}
 
