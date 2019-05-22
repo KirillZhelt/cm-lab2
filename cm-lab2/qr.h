@@ -1,5 +1,7 @@
 #pragma once
 
+const double ZERO_EPS = 10e-8;
+
 struct Complex {
 	double real;
 	double imaginary;

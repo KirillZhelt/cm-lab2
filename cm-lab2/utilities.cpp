@@ -81,6 +81,18 @@ void Multiply(double** m, int rows, int columns,
 	}
 }
 
+void MatrixMultiply(double** a, double** b, int n, int m, int k, double** c) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < k; j++) {
+			c[i][j] = 0;
+
+			for (int q = 0; q < m; q++) {
+				c[i][j] += a[i][q] * b[q][j];
+			}
+		}
+	}
+}
+
 void Subtract(double* v1, double* v2, int length, double* result) {
 	for (int i = 0; i < length; i++)
 		result[i] = v1[i] - v2[i];

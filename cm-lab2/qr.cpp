@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "utilities.h"
 
 #include "qr.h"
@@ -30,14 +32,16 @@ void BuildQR(double** m, int rows, int columns, double** qr, double* diag_r) {
 		qr[i][i] -= diag_r[i];
 		double norm = EuclideanNorm(&qr[i][i], rows - i);
 
-		for (int j = i; j < rows; j++) // wi
-			qr[i][j] /= norm;
+		if (norm != 0) {
+			for (int j = i; j < rows; j++) // wi
+				qr[i][j] /= norm;
 
-		for (int j = i + 1; j < columns; j++) {
-			double scalar_multiply_result = ScalarMultiply(&qr[j][i], &qr[i][i], rows - i);
+			for (int j = i + 1; j < columns; j++) {
+				double scalar_multiply_result = ScalarMultiply(&qr[j][i], &qr[i][i], rows - i);
 
-			for (int k = i; k < rows; k++)
-				qr[j][k] -= 2 * scalar_multiply_result * qr[i][k];
+				for (int k = i; k < rows; k++)
+					qr[j][k] -= 2 * scalar_multiply_result * qr[i][k];
+			}
 		}
 	}
 }
@@ -61,11 +65,17 @@ void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues, 
 	for (int i = 0; i < rows; i++)
 		q[i] = new double[columns] {};
 
+	double** ak = new double*[rows];
+	for (int i = 0; i < rows; i++)
+		ak[i] = new double[columns];
+
 	for (int i = 0; i < rows; i++)
 		q[i][i] = 1;
 
+	CopyMatrix(A, ak, rows, columns);
+
 	for (int i = 0; i < number_of_iterations; i++) {
-		BuildQR(A, rows, columns, qr, diag_r);
+		BuildQR(ak, rows, columns, qr, diag_r);
 
 		for (int i = 0; i < rows; i++)
 			r[i][i] = diag_r[i];
@@ -85,13 +95,48 @@ void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues, 
 					q[i][k] -= 2 * scalar_multiply_result * qr[j][k];
 			}
 		}
+
+		MatrixMultiply(r, q, rows, columns, columns, ak);
+
+		for (int i = 0; i < rows; i++) {
+			memset(q[i], 0, sizeof(double) * columns);
+			memset(r[i], 0, sizeof(double) * columns);
+		}
+
+		for (int i = 0; i < rows; i++)
+			q[i][i] = 1;
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = i; j < columns; j++) {
+				if (abs(ak[j][i]) < ZERO_EPS)
+					ak[j][i] = 0;
+			}
+		}
 	}
+	
+	cout << endl;
+	PrintMatrix(ak, rows, columns);
+	cout << endl;
 
 	/*
 		https://www.programiz.com/cpp-programming/examples/quadratic-roots
 
 		for finding roots 
 	*/
+
+	for (int i = 0; i < rows; ) {
+		if (i + 1 < rows) {
+
+		} 
+		else {
+			eigenvalues[i] = { ak[i][i], 0 };
+		}
+	}
+
+	for (int i = 0; i < rows; i++)
+		delete[] ak[i];
+
+	delete[] ak;
 
 	for (int i = 0; i < rows; i++)
 		delete[] q[i];

@@ -22,6 +22,8 @@ void CopyVector(double* src, double* dst, int length);
 void Multiply(double** m, int rows, int columns,
 	double* v, int length, double* b);
 
+void MatrixMultiply(double** a, double** b, int n, int m, int k, double** c);
+
 void Subtract(double* v1, double* v2, int length, double* result);
 
 template<typename T>
