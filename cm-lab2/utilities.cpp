@@ -1,8 +1,20 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
 #include "utilities.h"
+#include "qr.h"
 
 using namespace std;
+
+ostream& operator<<(ostream& out, Complex complex_number) {
+	out << complex_number.real;
+	
+	if (complex_number.imaginary != 0)
+		cout << " + " << complex_number.imaginary << "i";
+
+	return out;
+}
 
 double CheckEigenvalue(double** A, int rows, int columns, double eigenvalue, double* eigenvector) {
 	double* difference = new double[columns];
@@ -54,11 +66,18 @@ void PrintMatrix(double** m, int rows, int columns) {
 	}
 }
 
-void PrintVector(double* v, int length) {
-	for (int i = 0; i < length; i++)
-		cout << v[i] << ' ';
+void WriteMatrixToFile(double** m, int rows, int columns, string filename) {
+	ofstream fout(filename);
 
-	cout << "\n";
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			fout << m[i][j] << " ";
+		}
+
+		fout << "\n";
+	}
+
+	fout.close();
 }
 
 void CopyMatrix(double** src, double** dst, int rows, int columns) {
@@ -78,6 +97,18 @@ void Multiply(double** m, int rows, int columns,
 
 		for (int j = 0; j < columns; j++)
 			b[i] += m[i][j] * v[j];
+	}
+}
+
+void MatrixMultiply(double** a, double** b, int n, int m, int k, double** c) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < k; j++) {
+			c[i][j] = 0;
+
+			for (int q = 0; q < m; q++) {
+				c[i][j] += a[i][q] * b[q][j];
+			}
+		}
 	}
 }
 
