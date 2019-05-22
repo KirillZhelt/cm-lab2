@@ -15,6 +15,8 @@ double ScalarMultiply(double* v1, double* v2, int length);
 
 void PrintMatrix(double** m, int rows, int columns);
 
+void WriteMatrixToFile(double** m, int rows, int columns, std::string filename);
+
 void CopyMatrix(double** src, double** dst, int rows, int columns);
 
 void CopyVector(double* src, double* dst, int length);
@@ -29,7 +31,7 @@ void Subtract(double* v1, double* v2, int length, double* result);
 template<typename T>
 void PrintVector(T* v, int length) {
 	for (int i = 0; i < length; i++)
-		std::cout << v[i] << ' ';
+		std::cout << v[i] <<  "     ";
 
 	std::cout << "\n";
 }

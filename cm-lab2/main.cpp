@@ -21,6 +21,7 @@ int main() {
 		A[i] = new double[COLUMNS];
 
 	Fill(A, ROWS, COLUMNS, N);
+	WriteMatrixToFile(A, ROWS, COLUMNS, "matrix.txt");
 
 	double eigenvalue1, eigenvalue2;
 
@@ -34,13 +35,19 @@ int main() {
 	cout << k1 << " " << k2;
 
 	cout << endl << endl;
-	cout << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
-	cout << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
+	cout << eigenvalue1 << ": " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
+	cout << eigenvalue2 << ": "<< CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
+	cout << endl << endl;
 
 	Complex* eigenvalues = new Complex[ROWS];
 
 	FindEigenvaluesQR(A, ROWS, COLUMNS, eigenvalues, 1000);
 	PrintVector(eigenvalues, ROWS);
+
+	cout << endl << "Numpy eigenvalues: " << endl;
+	system("python eigenvalues.py");
+	cout << endl;
+
 
 	delete[] eigenvalues;
 

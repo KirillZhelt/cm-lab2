@@ -6,6 +6,37 @@
 
 using namespace std;
 
+pair<Complex, Complex> SolveQuadraticEquation(double a, double b, double c) {
+	pair<Complex, Complex> roots;
+
+	double discriminant = b * b - 4 * a * c;
+
+	if (discriminant < 0) {
+		roots.first.real = -b / (2 * a);
+		roots.first.imaginary = sqrt(-discriminant) / (2 * a);
+
+		roots.second.real = -b / (2 * a);
+		roots.second.imaginary = -sqrt(-discriminant) / (2 * a);
+	}
+	else if (discriminant == 0) {
+		roots.first.real = (-b + sqrt(discriminant)) / (2 * a);
+		roots.first.imaginary = 0;
+
+		roots.second.real = (-b - sqrt(discriminant)) / (2 * a);
+		roots.second.imaginary = 0;
+	}
+	else {
+		// discriminant > 0
+		roots.first.real = (-b + sqrt(discriminant)) / (2 * a);
+		roots.first.imaginary = 0;
+
+		roots.second.real = (-b - sqrt(discriminant)) / (2 * a);
+		roots.second.imaginary = 0;
+	}
+
+	return roots;
+}
+
 int Sign(double d) {
 	return (d >= 0) - (d < 0);
 }
@@ -114,20 +145,15 @@ void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues, 
 		}
 	}
 	
-	cout << endl;
-	PrintMatrix(ak, rows, columns);
-	cout << endl;
-
-	/*
-		https://www.programiz.com/cpp-programming/examples/quadratic-roots
-
-		for finding roots 
-	*/
-
 	for (int i = 0; i < rows; ) {
 		if (i + 1 < rows) {
 			if (ak[i + 1][i] != 0) {
+				auto roots = SolveQuadraticEquation(1, -ak[i + 1][i + 1] - ak[i][i],
+					ak[i][i] * ak[i + 1][i + 1] - ak[i][i + 1] * ak[i + 1][i]);
+				eigenvalues[i] = roots.first;
+				eigenvalues[i + 1] = roots.second;
 
+				i += 2;
 			}
 			else {
 				eigenvalues[i] = { ak[i][i], 0 };

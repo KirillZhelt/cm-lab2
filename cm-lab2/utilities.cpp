@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
 #include "utilities.h"
 #include "qr.h"
@@ -62,6 +64,20 @@ void PrintMatrix(double** m, int rows, int columns) {
 
 		cout << '\n';
 	}
+}
+
+void WriteMatrixToFile(double** m, int rows, int columns, string filename) {
+	ofstream fout(filename);
+
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			fout << m[i][j] << " ";
+		}
+
+		fout << "\n";
+	}
+
+	fout.close();
 }
 
 void CopyMatrix(double** src, double** dst, int rows, int columns) {
