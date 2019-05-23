@@ -34,11 +34,40 @@ def draw_function(f, a, b, step):
 
     plt.show()
 
-def bisection(sections, f, accuracy):
+def sign(x):
+    if x < 0:
+        return -1
+    elif x > 0:
+        return 1
+
+    return 0
+
+def bisection(sections, f, section_length):
+    result_sections = [list(section) for section in sections]
+
+    for section in result_sections:
+        while section[1] - section[0] > section_length:
+            mid = (section[1] + section[0]) / 2
+            if sign(f(mid)) != sign(f(section[0])):
+                section[1] = mid
+            else:
+                section[0] = mid
+
+    return result_sections
+
+def newton_discrete(sections, f, h, eps):
+    pass
+
+def newton(sections, f, ):
     pass
 
 if __name__ == "__main__":
     # a = -27 - math range error
-    draw_function(f, -26, 20, 0.1)
+
+    # draw_function(f, -26, 20, 0.01)
+
+    result_sections = bisection(sections, f, 10e-4)
+
+
 
 
