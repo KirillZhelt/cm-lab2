@@ -1,0 +1,39 @@
+POWER ITERATION (TASK 2):
+Average time to count one eigenvalue: 0.100058 ms
+Number of iterations for first and second eigenvalues: 217 314
+First eigenvalue norm: 9.70959e-06
+Second eigenvalue norm: 9.63246e-06
+
+
+QR (TASK 3): 
+Average time to count all eigenvalues: 6.1523 ms
+Eigenvalues: 2.92995     1.18644 + 2.5013i     1.18644 + -2.5013i     -2.70272     -2.38724 + 1.09471i     -2.38724 + -1.09471i     -1.91876     1.31729 + 0.973769i     1.31729 + -0.973769i     0.0190349     
+Numpy eigenvalues: 
+[ 2.92995649+0.j          1.18644033+2.50131161j  1.18644033-2.50131161j
+  1.31728352+0.9737502j   1.31728352-0.9737502j   0.01903992+0.j
+ -2.38723914+1.09472094j -2.38723914-1.09472094j -2.70271223+0.j
+ -1.91876192+0.j        ]
+
+
+BISECTION (TASK 6):
+Segments of separation: [[-1.951959228515625, -1.9519012451171878], [-1.1357910156249997, -1.1357226562499998], [1.951829833984375, 1.951923828125]]
+Number of steps for each segment: [15, 13, 13]
+BISECTION_SECTION_LENGTH = 0.0001
+
+
+DISCRETE NEWTON (TASK 7):
+Roots: [-1.951912575299919, -1.135756704469539, 1.9519145740760815]
+Number of steps for each root: [3, 3, 3]
+EPS = 1e-13, H = 1e-05
+
+
+IMPROVE ROOTS USING NEWTON (TASK 8):
+Roots: [-1.9519125752999187, -1.135756704469539, 1.9519145740760813]
+Number of steps for each root: [1, 1, 1]
+EPS = 1e-15
+
+
+NEWTON TO SEGMENTS OF SEPARATION (TASK 8):
+Roots: [-1.951912575299919, -1.135756704469539, 1.9519145740760813]
+Number of steps for each root: [3, 3, 3]
+EPS = 1e-15

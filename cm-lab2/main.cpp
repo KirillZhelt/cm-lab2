@@ -1,5 +1,7 @@
 
 #include <iostream>
+#include <fstream>
+#include <chrono>
 
 #include "utilities.h"
 
@@ -14,15 +16,24 @@ const int N = 3;
 const int ROWS = 10;
 const int COLUMNS = 10;
 
+const int NUMBER_OF_ITERATIONS_QR = 1000;
+
 int main() {
+	ofstream fout("report.txt");
+
+	chrono::high_resolution_clock::time_point start, finish;
+	chrono::duration<double, std::milli> fp_ms;
+
 	double** A = new double*[ROWS];
 
 	for (int i = 0; i < ROWS; i++)
 		A[i] = new double[COLUMNS];
 
+	// FILL (TASK 1)
 	Fill(A, ROWS, COLUMNS, N);
 	WriteMatrixToFile(A, ROWS, COLUMNS, "matrix.txt");
 
+	// POWER ITERATION (TASK 2)
 	double eigenvalue1, eigenvalue2;
 
 	double* eigenvector1 = new double[COLUMNS];
@@ -30,24 +41,37 @@ int main() {
 
 	int k1, k2;
 
+	start = chrono::high_resolution_clock::now();
 	PowerIteration(A, ROWS, COLUMNS, eigenvalue1, eigenvalue2, eigenvector1, eigenvector2, k1, k2);
+	finish = chrono::high_resolution_clock::now();
 
-	cout << k1 << " " << k2;
+	fp_ms = finish - start;
 
-	cout << endl << endl;
-	cout << eigenvalue1 << ": " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
-	cout << eigenvalue2 << ": "<< CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
-	cout << endl << endl;
+	fout << "POWER ITERATION (TASK 2):" << endl;
+	fout << "Average time to count one eigenvalue: " << fp_ms.count() / 2 << " ms" << endl;
+	fout << "Number of iterations for first and second eigenvalues: " << k1 << " " << k2 << endl;
+	fout << "First eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
+	fout << "Second eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
+	fout << endl << endl;
 
+	// QR (TASK 3)
 	Complex* eigenvalues = new Complex[ROWS];
 
-	FindEigenvaluesQR(A, ROWS, COLUMNS, eigenvalues, 1000);
-	PrintVector(eigenvalues, ROWS);
+	start = chrono::high_resolution_clock::now();
+	FindEigenvaluesQR(A, ROWS, COLUMNS, eigenvalues, NUMBER_OF_ITERATIONS_QR);
+	finish = chrono::high_resolution_clock::now();
 
-	cout << endl << "Numpy eigenvalues: " << endl;
-	system("python eigenvalues.py");
-	cout << endl;
+	fp_ms = finish - start;
 
+	fout << "QR (TASK 3): " << endl;
+	fout << "Average time to count all eigenvalues: " << fp_ms.count() << " ms" << endl;
+	fout << "Eigenvalues: ";
+	PrintVector(fout, eigenvalues, ROWS);
+	fout << endl << "Numpy eigenvalues: " << endl;
+	system("python eigenvalues.py"); // будет работать только с питоном и нумпаем
+
+	// TASKS 5-8
+	system("python equation.py"); // будет работать только с питоном
 
 	delete[] eigenvalues;
 
@@ -58,6 +82,8 @@ int main() {
 		delete[] A[i];
 
 	delete[] A;
+
+	fout.close();
 
 	system("pause");
 

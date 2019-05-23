@@ -11,7 +11,7 @@ ostream& operator<<(ostream& out, Complex complex_number) {
 	out << complex_number.real;
 	
 	if (complex_number.imaginary != 0)
-		cout << " + " << complex_number.imaginary << "i";
+		out << " + " << complex_number.imaginary << "i";
 
 	return out;
 }

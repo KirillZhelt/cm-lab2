@@ -127,6 +127,10 @@
     <ClInclude Include="qr.h" />
     <ClInclude Include="utilities.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="eigenvalues.py" />
+    <None Include="equation.py" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
