@@ -47,12 +47,12 @@ int main() {
 
 	fp_ms = finish - start;
 
-	cout << "POWER ITERATION (TASK 2):" << endl;
-	cout << "Number of iterations for first and second eigenvalues: " << k1 << " " << k2 << endl;
-	cout << "First eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
-	cout << "Second eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
-	cout << "Average time to count one eigenvalue: " << fp_ms.count() / 2 << " ms" << endl;
-	cout << endl << endl;
+	fout << "POWER ITERATION (TASK 2):" << endl;
+	fout << "Average time to count one eigenvalue: " << fp_ms.count() / 2 << " ms" << endl;
+	fout << "Number of iterations for first and second eigenvalues: " << k1 << " " << k2 << endl;
+	fout << "First eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
+	fout << "Second eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
+	fout << endl << endl;
 
 	// QR (TASK 3)
 	Complex* eigenvalues = new Complex[ROWS];
@@ -63,14 +63,15 @@ int main() {
 
 	fp_ms = finish - start;
 
-	cout << "QR (TASK 3): " << endl;
-	cout << "Eigenvalues: ";
-	PrintVector(eigenvalues, ROWS);
-	cout << "Numpy eigenvalues: ";
-	system("python eigenvalues.py");
-	cout << "Average time to count all eigenvalues: " << fp_ms.count() << " ms" << endl << endl;
+	fout << "QR (TASK 3): " << endl;
+	fout << "Average time to count all eigenvalues: " << fp_ms.count() << " ms" << endl;
+	fout << "Eigenvalues: ";
+	PrintVector(fout, eigenvalues, ROWS);
+	fout << endl << "Numpy eigenvalues: " << endl;
+	system("python eigenvalues.py"); // будет работать только с питоном и нумпаем
 
-	system("python equation.py");
+	// TASKS 5-8
+	system("python equation.py"); // будет работать только с питоном
 
 	delete[] eigenvalues;
 

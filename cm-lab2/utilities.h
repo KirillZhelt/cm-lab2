@@ -5,6 +5,12 @@
 struct Complex;
 std::ostream& operator<<(std::ostream& out, Complex complex_number);
 
+template<typename T>
+void PrintVector(std::ostream& out, T* v, int length) {
+	for (int i = 0; i < length; i++)
+		out << v[i] << "     ";
+}
+
 double CheckEigenvalue(double** A, int rows, int columns, double eigenvalue, double* eigenvector);
 
 double MaxNorm(double* v, int length);
@@ -28,10 +34,3 @@ void MatrixMultiply(double** a, double** b, int n, int m, int k, double** c);
 
 void Subtract(double* v1, double* v2, int length, double* result);
 
-template<typename T>
-void PrintVector(T* v, int length) {
-	for (int i = 0; i < length; i++)
-		std::cout << v[i] <<  "     ";
-
-	std::cout << "\n";
-}
