@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <chrono>
 
 #include "utilities.h"
 
@@ -15,8 +16,13 @@ const int N = 3;
 const int ROWS = 10;
 const int COLUMNS = 10;
 
+const int NUMBER_OF_ITERATIONS_QR = 1000;
+
 int main() {
 	ofstream fout("report.txt");
+
+	chrono::high_resolution_clock::time_point start, finish;
+	chrono::duration<double, std::milli> fp_ms;
 
 	double** A = new double*[ROWS];
 
@@ -35,24 +41,36 @@ int main() {
 
 	int k1, k2;
 
+	start = chrono::high_resolution_clock::now();
 	PowerIteration(A, ROWS, COLUMNS, eigenvalue1, eigenvalue2, eigenvector1, eigenvector2, k1, k2);
+	finish = chrono::high_resolution_clock::now();
 
-	cout << k1 << " " << k2;
+	fp_ms = finish - start;
 
+	cout << "POWER ITERATION (TASK 2):" << endl;
+	cout << "Number of iterations for first and second eigenvalues: " << k1 << " " << k2 << endl;
+	cout << "First eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
+	cout << "Second eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
+	cout << "Average time to count one eigenvalue: " << fp_ms.count() / 2 << " ms" << endl;
 	cout << endl << endl;
-	cout << eigenvalue1 << ": " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
-	cout << eigenvalue2 << ": "<< CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
-	cout << endl << endl;
 
+	// QR (TASK 3)
 	Complex* eigenvalues = new Complex[ROWS];
 
-	FindEigenvaluesQR(A, ROWS, COLUMNS, eigenvalues, 1000);
+	start = chrono::high_resolution_clock::now();
+	FindEigenvaluesQR(A, ROWS, COLUMNS, eigenvalues, NUMBER_OF_ITERATIONS_QR);
+	finish = chrono::high_resolution_clock::now();
+
+	fp_ms = finish - start;
+
+	cout << "QR (TASK 3): " << endl;
+	cout << "Eigenvalues: ";
 	PrintVector(eigenvalues, ROWS);
-
-	cout << endl << "Numpy eigenvalues: " << endl;
+	cout << "Numpy eigenvalues: ";
 	system("python eigenvalues.py");
-	cout << endl;
+	cout << "Average time to count all eigenvalues: " << fp_ms.count() << " ms" << endl << endl;
 
+	system("python equation.py");
 
 	delete[] eigenvalues;
 

@@ -57,4 +57,12 @@
       <Filter>Source Files\qr-task3</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="eigenvalues.py">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="equation.py">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
