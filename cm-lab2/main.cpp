@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <fstream>
 
 #include "utilities.h"
 
@@ -15,14 +16,18 @@ const int ROWS = 10;
 const int COLUMNS = 10;
 
 int main() {
+	ofstream fout("report.txt");
+
 	double** A = new double*[ROWS];
 
 	for (int i = 0; i < ROWS; i++)
 		A[i] = new double[COLUMNS];
 
+	// FILL (TASK 1)
 	Fill(A, ROWS, COLUMNS, N);
 	WriteMatrixToFile(A, ROWS, COLUMNS, "matrix.txt");
 
+	// POWER ITERATION (TASK 2)
 	double eigenvalue1, eigenvalue2;
 
 	double* eigenvector1 = new double[COLUMNS];
@@ -58,6 +63,8 @@ int main() {
 		delete[] A[i];
 
 	delete[] A;
+
+	fout.close();
 
 	system("pause");
 
