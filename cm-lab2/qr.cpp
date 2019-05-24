@@ -77,6 +77,70 @@ void BuildQR(double** m, int rows, int columns, double** qr, double* diag_r) {
 	}
 }
 
+void BuildHessenbergArnoldi(double** A, int rows, int columns, double** H) {
+	double** Q = new double*[rows];
+	for (int i = 0; i < rows; i++)
+		Q[i] = new double[columns];
+
+	double* z = new double[rows];
+	double* hq = new double[rows];
+
+	for (int i = 0; i < rows; i++) {
+		memset(H[i], 0, sizeof(double) * columns);
+	}
+
+	double euclidean_norm = 0;
+	for (int i = 0; i < rows; i++) {
+		euclidean_norm += A[i][0] * A[i][0];
+	}
+
+	euclidean_norm = sqrt(euclidean_norm);
+
+	for (int i = 0; i < rows; i++) {
+		Q[i][0] = A[i][0] / euclidean_norm; // ||q1|| = 1
+	}
+
+	for (int k = 1;; k++) {
+		for (int i = 0; i < rows; i++) {
+			z[i] = 0;
+
+			for (int j = 0; j < columns; j++)
+				z[i] += A[i][j] * Q[j][k - 1];
+		}
+
+		for (int i = 0; i < k; i++) {
+			H[i][k - 1] = 0;
+
+			for (int j = 0; j < rows; j++)
+				H[i][k - 1] += z[j] * Q[j][i];
+
+			for (int j = 0; j < rows; j++)
+				hq[j] = H[i][k - 1] * Q[j][i];
+
+			Subtract(z, hq, rows, z);
+		}
+
+		PrintMatrix(H, rows, columns);
+		cout << endl;
+		double l = EuclideanNorm(z, rows);
+		H[k][k - 1] = l;
+		if (H[k][k - 1] < 1e-13)
+			break;
+
+		for (int j = 0; j < rows; j++)
+			Q[j][k] = z[j] / H[k][k - 1];
+	}
+
+	delete[] hq;
+
+	delete[] z;
+
+	for (int i = 0; i < rows; i++)
+		delete[] Q[i];
+
+	delete[] Q;
+}
+
 void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues, int number_of_iterations) {
 	// Ak = QkRk
 	// Ak+1 = Rk*Qk
@@ -96,14 +160,15 @@ void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues, 
 	for (int i = 0; i < rows; i++)
 		q[i] = new double[columns] {};
 
-	double** ak = new double*[rows];
-	for (int i = 0; i < rows; i++)
-		ak[i] = new double[columns];
+	double** ak = new double*[rows + 1];
+	for (int i = 0; i < rows + 1; i++)
+		ak[i] = new double[columns + 1];
 
 	for (int i = 0; i < rows; i++)
 		q[i][i] = 1;
 
-	CopyMatrix(A, ak, rows, columns);
+	BuildHessenbergArnoldi(A, rows, columns, ak);
+	PrintMatrix(ak, rows, columns);
 
 	for (int i = 0; i < number_of_iterations; i++) {
 		BuildQR(ak, rows, columns, qr, diag_r);
