@@ -34,13 +34,14 @@ int main() {
 	WriteMatrixToFile(A, ROWS, COLUMNS, "matrix.txt");
 
 	// POWER ITERATION (TASK 2)
+	
 	double eigenvalue1, eigenvalue2;
 
 	double* eigenvector1 = new double[COLUMNS];
 	double* eigenvector2 = new double[COLUMNS];
 
 	int k1, k2;
-
+	
 	start = chrono::high_resolution_clock::now();
 	PowerIteration(A, ROWS, COLUMNS, eigenvalue1, eigenvalue2, eigenvector1, eigenvector2, k1, k2);
 	finish = chrono::high_resolution_clock::now();
@@ -53,7 +54,7 @@ int main() {
 	fout << "First eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue1, eigenvector1) << endl;
 	fout << "Second eigenvalue norm: " << CheckEigenvalue(A, ROWS, COLUMNS, eigenvalue2, eigenvector2) << endl;
 	fout << endl << endl;
-
+	
 	// QR (TASK 3)
 	Complex* eigenvalues = new Complex[ROWS];
 
@@ -69,10 +70,10 @@ int main() {
 	PrintVector(fout, eigenvalues, ROWS);
 	fout << endl << "Numpy eigenvalues: " << endl;
 	system("python eigenvalues.py"); // будет работать только с питоном и нумпаем
-
+	
 	// TASKS 5-8
 	system("python equation.py"); // будет работать только с питоном
-
+	
 	delete[] eigenvalues;
 
 	delete[] eigenvector2;
