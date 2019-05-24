@@ -120,10 +120,7 @@ void BuildHessenbergArnoldi(double** A, int rows, int columns, double** H) {
 			Subtract(z, hq, rows, z);
 		}
 
-		PrintMatrix(H, rows, columns);
-		cout << endl;
-		double l = EuclideanNorm(z, rows);
-		H[k][k - 1] = l;
+		H[k][k - 1] = EuclideanNorm(z, rows);
 		if (H[k][k - 1] < 1e-13)
 			break;
 
@@ -167,8 +164,9 @@ void FindEigenvaluesQR(double** A, int rows, int columns, Complex* eigenvalues, 
 	for (int i = 0; i < rows; i++)
 		q[i][i] = 1;
 
+	//CopyMatrix(A, ak, rows, columns);
 	BuildHessenbergArnoldi(A, rows, columns, ak);
-	PrintMatrix(ak, rows, columns);
+	//PrintMatrix(ak, rows, columns);
 
 	for (int i = 0; i < number_of_iterations; i++) {
 		BuildQR(ak, rows, columns, qr, diag_r);

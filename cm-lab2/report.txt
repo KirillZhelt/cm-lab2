@@ -1,9 +1,39 @@
-QR (TASK 3): 
-Average time to count all eigenvalues: 590.547 ms
-Eigenvalues: 3.76322     -3.60823     2.75124     -0.887548 + 2.54347i     -0.887548 + -2.54347i     1.95176 + 0.552735i     1.95176 + -0.552735i     0.49477 + 1.35621i     0.49477 + -1.35621i     0.48894     
-Numpy eigenvalues: 
-[-3.60823105+0.j         -0.88754604+2.54346997j -0.88754604-2.54346997j
-  3.7632268 +0.j          0.49477182+1.35620508j  0.49477182-1.35620508j
-  2.75124535+0.j          1.95175332+0.55274046j  1.95175332-0.55274046j
-  0.48893982+0.j        ]
+POWER ITERATION (TASK 2):
+Average time to count one eigenvalue: 0.177274 ms
+Number of iterations for first and second eigenvalues: 500 500
+First eigenvalue norm: 2.13455
+Second eigenvalue norm: 1.6764
 
+
+QR (TASK 3): 
+Average time to count all eigenvalues: 3552.14 ms
+Eigenvalues: -1.24765 + 2.48732i     -1.24765 + -2.48732i     2.07918 + 1.50059i     2.07918 + -1.50059i     -2.39537 + 0.599994i     -2.39537 + -0.599994i     2.07579     -1.01574 + 0.121942i     -1.01574 + -0.121942i     0.749054     
+Numpy eigenvalues: 
+[ 2.07917815+1.50059605j  2.07917815-1.50059605j  2.07579053+0.j
+ -1.24765655+2.48732191j -1.24765655-2.48732191j  0.74905355+0.j
+ -2.39537356+0.59999094j -2.39537356-0.59999094j -1.01573458+0.12196783j
+ -1.01573458-0.12196783j]
+
+
+BISECTION (TASK 6):
+Segments of separation: [[-1.951959228515625, -1.9519012451171878], [-1.1357910156249997, -1.1357226562499998], [1.951829833984375, 1.951923828125]]
+Number of steps for each segment: [15, 13, 13]
+BISECTION_SECTION_LENGTH = 0.0001
+
+
+DISCRETE NEWTON (TASK 7):
+Roots: [-1.951912575299919, -1.135756704469539, 1.9519145740760815]
+Number of steps for each root: [3, 3, 3]
+EPS = 1e-13, H = 1e-05
+
+
+IMPROVE ROOTS USING NEWTON (TASK 8):
+Roots: [-1.9519125752999187, -1.135756704469539, 1.9519145740760813]
+Number of steps for each root: [1, 1, 1]
+EPS = 1e-15
+
+
+NEWTON TO SEGMENTS OF SEPARATION (TASK 8):
+Roots: [-1.951912575299919, -1.135756704469539, 1.9519145740760813]
+Number of steps for each root: [3, 3, 3]
+EPS = 1e-15
